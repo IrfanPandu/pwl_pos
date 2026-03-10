@@ -6,39 +6,33 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
-       Schema::create('t_penjualan_detail', function (Blueprint $table) {
-    $table->id('detail_id');
+        Schema::create('t_penjualan_detail', function (Blueprint $table) {
+            $table->id('detail_id');
 
-    $table->unsignedBigInteger('penjualan_id');
-    $table->unsignedBigInteger('barang_id');
+            $table->unsignedBigInteger('penjualan_id');
+            $table->unsignedBigInteger('barang_id');
 
-    $table->integer('harga');
-    $table->integer('jumlah');
+            $table->integer('harga');
+            $table->integer('jumlah');
 
-    $table->timestamps();
+            $table->timestamps();
 
-    $table->foreign('penjualan_id')
-          ->references('penjualan_id')
-          ->on('t_penjualan');
+            $table->foreign('penjualan_id')
+                  ->references('penjualan_id')
+                  ->on('t_penjualan')
+                  ->onDelete('cascade');
 
-    $table->foreign('barang_id')
-          ->references('barang_id')
-          ->on('m_barang');
-});
+            $table->foreign('barang_id')
+                  ->references('barang_id')
+                  ->on('m_barang')
+                  ->onDelete('cascade');
+        });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::table('t_penjualan_detail', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('t_penjualan_detail');
     }
 };
